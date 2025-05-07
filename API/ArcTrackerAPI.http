@@ -1,0 +1,6 @@
+@ArcTrackerAPI_HostAddress = http://localhost:5039
+
+GET {{ArcTrackerAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
