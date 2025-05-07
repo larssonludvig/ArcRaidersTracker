@@ -1,49 +1,49 @@
 -- Default table for general information
 CREATE TABLE Items (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    recyclable BOOLEAN NOT NULL DEFAULT FALSE,
-    sellable BOOLEAN NOT NULL DEFAULT FALSE,
-    sell_price INT UNSIGNED NOT NULL DEFAULT 0,
-    repairable BOOLEAN NOT NULL DEFAULT FALSE,
-    repair_cost INT UNSIGNED NOT NULL DEFAULT 0,
-    stack_size INT UNSIGNED NOT NULL DEFAULT 1,
-    CHECK (stack_size > 0)
+    Id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Description TEXT,
+    Recyclable BOOLEAN NOT NULL DEFAULT FALSE,
+    Sellable BOOLEAN NOT NULL DEFAULT FALSE,
+    SellPrice INT UNSIGNED NOT NULL DEFAULT 0,
+    Repairable BOOLEAN NOT NULL DEFAULT FALSE,
+    RepairCost INT UNSIGNED NOT NULL DEFAULT 0,
+    StackSize INT UNSIGNED NOT NULL DEFAULT 1,
+    CHECK (StackSize > 0)
 );
 
 -- Recycle relation
 CREATE TABLE Recyclables (
-    consume_id BIGINT UNSIGNED NOT NULL,
-    receive_id BIGINT UNSIGNED NOT NULL,
-    count INT UNSIGNED NOT NULL,
-    PRIMARY KEY (consume_id, receive_id),
-    FOREIGN KEY (consume_id) REFERENCES Items(id),
-    FOREIGN KEY (receive_id) REFERENCES Items(id),
+    ConsumeId BIGINT UNSIGNED NOT NULL,
+    ReceiveId BIGINT UNSIGNED NOT NULL,
+    Count INT UNSIGNED NOT NULL,
+    PRIMARY KEY (ConsumeId, ReceiveId),
+    FOREIGN KEY (ConsumeId) REFERENCES Items(Id),
+    FOREIGN KEY (ReceiveId) REFERENCES Items(Id),
     CHECK (count > 0)
 );
 
 -- Equipment table
 CREATE TABLE Equipment (
-    item_id BIGINT UNSIGNED NOT NULL PRIMARY KEY,
-    shield INT UNSIGNED NOT NULL DEFAULT 0,
-    FOREIGN KEY (item_id) REFERENCES Items(id),
+    ItemId BIGINT UNSIGNED NOT NULL PRIMARY KEY,
+    Shield INT UNSIGNED NOT NULL DEFAULT 0,
+    FOREIGN KEY (ItemId) REFERENCES Items(Id),
 );
 
 -- Weapons table
 CREATE TABLE Weapons (
-    item_id BIGINT UNSIGNED NOT NULL PRIMARY KEY,
-    damage INT UNSIGNED NOT NULL DEFAULT 0,
-    fire_rate INT UNSIGNED NOT NULL DEFAULT 0,
-    magazine_size INT UNSIGNED NOT NULL DEFAULT 1,
-    hs_multiplier FLOAT NOT NULL DEFAULT 1,
-    FOREIGN KEY (item_id) REFERENCES Items(id),
-    CHECK (magazine_size > 0),
-    CHECK (hs_multiplier >= 1)
+    IitemId BIGINT UNSIGNED NOT NULL PRIMARY KEY,
+    Damage INT UNSIGNED NOT NULL DEFAULT 0,
+    FireRate INT UNSIGNED NOT NULL DEFAULT 0,
+    MagazineSize INT UNSIGNED NOT NULL DEFAULT 1,
+    HSMultiplier FLOAT NOT NULL DEFAULT 1,
+    FOREIGN KEY (ItemId) REFERENCES Items(Id),
+    CHECK (MagazineSize > 0),
+    CHECK (HSMultiplier >= 1)
 );
 
 -- Gadgets table
 CREATE TABLE Gadgets (
-    item_id BIGINT UNSIGNED NOT NULL PRIMARY KEY,
-    FOREIGN KEY (item_id) REFERENCES Items(id)
+    ItemId BIGINT UNSIGNED NOT NULL PRIMARY KEY,
+    FOREIGN KEY (ItemId) REFERENCES Items(Id)
 );
