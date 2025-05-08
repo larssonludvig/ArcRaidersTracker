@@ -1,5 +1,5 @@
-# Arc-Tracker
-Arc-Tracker is a service that aims to provide information and data regarding the game [Arc Raiders](https://arcraiders.com).
+# ArcRaidersTracker
+ArcRaidersTracker is a service that aims to provide information and data regarding the game [Arc Raiders](https://arcraiders.com).
 
 ---
 
@@ -14,11 +14,9 @@ Arc-Tracker is a service that aims to provide information and data regarding the
 ## Usage
 
 ## Development
-The project is to be developed in ASP.NET and .NET Blazor to keep it consistent between services. 
+To start out, a database and API will be hosted on-prem where it is exposed by a domain. This solution may not be sufficient as the project grows, in which it may need to be moved into the cloud. Therefore, the API is to be deployable by a docker container through ASP.NET Core. 
 
-To start out, a database and API will be hosted on-prem where it is exposed by a domain. This solution may not be sufficient as the project grows, in which it may need to be moved into the cloud. Therefore, the API is to be deployable by a docker container. 
-
-The frontend will be developed as a .NET Blazor Server application. 
+The frontend is not decided on.
 
 ## Licence
-To come.
+This project, and all code it contains, are licensed under the [*Apache License*](https://www.apache.org/licenses/LICENSE-2.0).
