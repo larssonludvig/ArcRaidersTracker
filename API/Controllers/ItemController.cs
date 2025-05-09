@@ -1,7 +1,6 @@
 using ArcTrackerAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using ArcTrackerAPI.Data;
-using ArcTrackerAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ArcTrackerAPI.Controllers
