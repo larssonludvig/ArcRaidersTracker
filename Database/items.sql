@@ -9,41 +9,30 @@ CREATE TABLE Items (
     Repairable BOOLEAN NOT NULL DEFAULT FALSE,
     RepairCost INT UNSIGNED NOT NULL DEFAULT 0,
     StackSize INT UNSIGNED NOT NULL DEFAULT 1,
-    CHECK (StackSize > 0)
+    RarityId BIGINT UNSIGNED NOT NULL,
+    TypeId BIGINT UNSIGNED NOT NULL,
+    FOREIGN KEY (RarityId) REFERENCES ItemRarities(Id),
+    FOREIGN KEY (TypeId) REFERENCES ItemTypes(Id)
 );
 
 -- Recycle relation
 CREATE TABLE Recyclables (
     ConsumeId BIGINT UNSIGNED NOT NULL,
     ReceiveId BIGINT UNSIGNED NOT NULL,
-    Count INT UNSIGNED NOT NULL,
+    Count INT UNSIGNED NOT NULL DEFAULT 1,
     PRIMARY KEY (ConsumeId, ReceiveId),
     FOREIGN KEY (ConsumeId) REFERENCES Items(Id),
-    FOREIGN KEY (ReceiveId) REFERENCES Items(Id),
-    CHECK (count > 0)
+    FOREIGN KEY (ReceiveId) REFERENCES Items(Id)
 );
 
--- Equipment table
-CREATE TABLE Equipment (
-    ItemId BIGINT UNSIGNED NOT NULL PRIMARY KEY,
-    Shield INT UNSIGNED NOT NULL DEFAULT 0,
-    FOREIGN KEY (ItemId) REFERENCES Items(Id),
+-- Item rarity enum table
+CREATE TABLE ItemRarities (
+    Id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Colour VARCHAR(6) NOT NULL DEFAULT '000000' -- Colour code
 );
 
--- Weapons table
-CREATE TABLE Weapons (
-    IitemId BIGINT UNSIGNED NOT NULL PRIMARY KEY,
-    Damage INT UNSIGNED NOT NULL DEFAULT 0,
-    FireRate INT UNSIGNED NOT NULL DEFAULT 0,
-    MagazineSize INT UNSIGNED NOT NULL DEFAULT 1,
-    HSMultiplier FLOAT NOT NULL DEFAULT 1,
-    FOREIGN KEY (ItemId) REFERENCES Items(Id),
-    CHECK (MagazineSize > 0),
-    CHECK (HSMultiplier >= 1)
-);
-
--- Gadgets table
-CREATE TABLE Gadgets (
-    ItemId BIGINT UNSIGNED NOT NULL PRIMARY KEY,
-    FOREIGN KEY (ItemId) REFERENCES Items(Id)
+CREATE TABLE ItemTypes (
+    Id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL
 );
