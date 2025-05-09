@@ -69,5 +69,64 @@ namespace ArcTrackerAPI.Controllers
 
             return res;
         }
+
+        [HttpGet("{id}/recipes")]
+        public async Task<ActionResult<List<WorkbenchRecipe>>> getWorkbenchRecipes(ulong id)
+        {
+            List<WorkbenchRecipe> res = await _context.WorkbenchRecipes
+                .Where(x => x.WorkbenchId == id)
+                .ToListAsync();
+
+            if (res.Count == 0)
+                return NotFound($"No recipes found for workbench with id \"{id}\".");
+
+            return res;
+        }
+
+        [HttpGet("recipes")]
+        public async Task<ActionResult<List<WorkbenchRecipe>>> getRecipes(ulong id)
+        {
+            List<WorkbenchRecipe> res = await _context.WorkbenchRecipes
+                .ToListAsync();
+
+            if (res.Count == 0)
+                return NotFound("No recipes found.");
+
+            return res;
+        }
+
+        [HttpGet("recipes/{id}")]
+        public async Task<ActionResult<WorkbenchRecipe>> getRecipe(ulong id)
+        {
+            WorkbenchRecipe? res = await _context.WorkbenchRecipes
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (res == null)
+                return NotFound("No recipe found woth id \"{id}\".");
+
+            return res;
+        }
+
+        [HttpGet("recipes/{id}/cost")]
+        public async Task<ActionResult<List<Countable<Item>>>> getRecipeCost(ulong id)
+        {
+            List<Countable<Item>> res = new List<Countable<Item>>();
+
+            var items = await _context.WorkbenchRecipeCosts
+                .Join(_context.Items,
+                    recipe => recipe.ItemId,
+                    item => item.Id,
+                    (recipe, item) => new { recipe, item }
+                )
+                .Where(x => x.recipe.WorkbenchRecipeId == id)
+                .ToListAsync();
+
+            foreach (var item in items)
+            {
+                res.Add(new Countable<Item> { Entity = item.item, Count = item.recipe.Count });
+            }
+
+            return res;
+        }
     }
 }

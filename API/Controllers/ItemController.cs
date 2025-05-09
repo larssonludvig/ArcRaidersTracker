@@ -40,7 +40,59 @@ namespace ArcTrackerAPI.Controllers
                 );
 
             if (res == null)
-                return NotFound($"Item by id \"{id}\" not found.");
+                return NotFound($"Item by id \"{id}\" was found.");
+
+            return res;
+        }
+
+        [HttpGet("rarities")]
+        public async Task<ActionResult<List<ItemRarity>>> getItemRarities()
+        {
+            List<ItemRarity> res = await _context.ItemRarities
+                .ToListAsync();
+
+            if (res == null)
+                return NotFound("No ItemRarities found.");
+
+            return res;
+        }
+
+        [HttpGet("rarities/{id}")]
+        public async Task<ActionResult<ItemRarity>> getItemRarity(ulong id)
+        {
+            ItemRarity? res = await _context.ItemRarities
+                .FirstOrDefaultAsync(x => 
+                    x.Id == id
+                );
+
+            if (res == null)
+                return NotFound($"ItemRarity by id \"{id}\" was found.");
+
+            return res;
+        }
+
+        [HttpGet("types")]
+        public async Task<ActionResult<List<ItemType>>> getItemTypes()
+        {
+            List<ItemType> res = await _context.ItemTypes
+                .ToListAsync();
+
+            if (res == null)
+                return NotFound("No ItemTypes found.");
+
+            return res;
+        }
+
+        [HttpGet("types/{id}")]
+        public async Task<ActionResult<ItemType>> getItemType(ulong id)
+        {
+            ItemType? res = await _context.ItemTypes
+                .FirstOrDefaultAsync(x => 
+                    x.Id == id
+                );
+
+            if (res == null)
+                return NotFound($"ItemType by id \"{id}\" was found.");
 
             return res;
         }

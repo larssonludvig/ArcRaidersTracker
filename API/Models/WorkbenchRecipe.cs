@@ -7,6 +7,7 @@ namespace ArcTrackerAPI.Models
         [Key]
         public ulong Id { get; set; }
         public ulong ItemId { get; set; }
+        public ulong WorkbenchId { get; set; }
         public uint Count { get; set; } = 1;
     }
 }
